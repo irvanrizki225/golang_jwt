@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/joho/godotenv"
 )
 
 type Service interface {
@@ -12,6 +13,13 @@ type Service interface {
 	ValidateToken(encodedToken string) (*jwt.Token, error)
 }
 type jwtService struct {
+}
+
+func init() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		panic(err)
+	}
 }
 
 var SECRET_KEY = []byte(os.Getenv("SECRET_KEY")) 

@@ -6,9 +6,15 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"github.com/joho/godotenv"
 )
 
 func ConnecDB() *gorm.DB {
+
+	err := godotenv.Load(".env")
+	if err != nil {
+		panic(err)
+	}
 
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USER")
@@ -17,7 +23,9 @@ func ConnecDB() *gorm.DB {
 	port := os.Getenv("DB_PORT")
 	timezone := os.Getenv("DB_TIMEZONE")
 
-	// fmt.Println("Connecting to database...")
+	fmt.Println(os.Getenv("DB_HOST"))
+
+	fmt.Println("Connecting to database...")
 
 	dsn := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbname + " port=" + port + " sslmode=disable TimeZone=" + timezone
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})

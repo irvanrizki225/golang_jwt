@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	// "fmt"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
@@ -78,7 +78,7 @@ func RegisterUser(c *gin.Context) {
 	}
 
 	//generate token
-	token, err := auth.NewService().GenerateToken(1,1)
+	token, err := auth.NewService().GenerateToken(newEmployee.ID, newUser.ID)
 	if err != nil {
 		response := helpers.APIResponse("Create Token Failed", 500, "error", nil)
 		c.JSON(500, response)
@@ -107,9 +107,10 @@ func GetEmployee(c *gin.Context) {
 	
 	// Get employee ID from token
 	id := c.MustGet("currentUser").(int)
+	fmt.Println("ID : ", id)
 
 	// Get employee data
-	if err := db.Where("user_id = ?", id).Find(&employee).Error; err != nil {
+	if err := db.Where("id = ?", id).Find(&employee).Error; err != nil {
 		response := helpers.APIResponse("Get Employee Failed", 400, "error", nil)
 		c.JSON(400, response)
 		return

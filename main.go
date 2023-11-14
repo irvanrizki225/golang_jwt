@@ -18,8 +18,8 @@ import (
 //jika mau push ke repo harus ganti pass db nya
 
 func main() {
-	// //conec DB
-	// db := utilities.ConnecDB()
+	// //connec DB
+	// utilities.ConnecDB()
 
 	// // //migrate table
 	// models.Migrate(db)
